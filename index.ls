@@ -1,8 +1,9 @@
 # autocompile
 require! { net }
 
-export (cb) -> 
+module.exports = (cb) -> 
   srv = net.createServer (sock) -> sock.end!
   srv.listen 0, ->
-    srv.end!
-    cb srv.address().port
+    port = srv.address().port
+    srv.close!
+    cb void, port
